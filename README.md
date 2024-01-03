@@ -31,3 +31,31 @@ The parameter
     <Year>
 
 represents the year processing refers to: the procedure operates on a yearly basis, in order to contain computing time (Python is not renowned for speed).
+
+## 'procGen.py' script
+
+The **procGen.py** script aggregates hourly "processed" and "diagnostic" MeteoFlux Core V2 data to individual files, in preparation of diagnostic data analysis, one of the site maintenance activities.
+
+To run the procedure the following command line is used:
+
+    ./procGen.py <Data_Path> <Year> <Processed_File> <Diagnostic_File>
+
+where
+
+    <Data_Path>
+
+represents the path name of the root data directory, for example
+
+    /mnt/data
+
+on a MeteoFlux Core V2 system. The directory may also reside somewhere else, for example on a USB disk where data have been copied during periodic maintenance.
+
+The parameter
+
+    <Year>
+
+represents the year processing refers to: the procedure operates on a yearly basis, in order to contain computing time (Python is not renowned for speed).
+
+The parameters <Processed_File> and <Diagnostic_File> indicate the names of the processed and diagnostic aggregated files. These are distinct CSV text files, suitable to be read into dataframes, and used as input to the **checkSite.py** script.
+
+

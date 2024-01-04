@@ -59,3 +59,27 @@ represents the year processing refers to: the procedure operates on a yearly bas
 The parameters <Processed_File> and <Diagnostic_File> indicate the names of the processed and diagnostic aggregated files. These are distinct CSV text files, suitable to be read into dataframes, and used as input to the **checkSite.py** script.
 
 
+## 'checkSite.py' script
+
+The **checkSite.py** script gets aggregated MeteoFlux Core V2 sonic processed data, as produced using procedure **procGen.py**, and builds a set of files useful during maintenance.
+
+To run the procedure the following command line is used:
+
+    ./checkSite.py <Processed_Data_File> <Out_Prefix>
+
+where
+
+    <Processed_Data_File>
+
+is the pathname of the a file containing processed sonic data in MeteoFlux Core V2 aggregated format, and
+
+    <Out_Prefix>
+
+a string which, concatenated on left to other strings, allows building actual output file names.
+
+The file produced on successful exit are:
+
+    **<Out_Prefix>_BlindSpots.csv**
+    <Out_Prefix>_ObstructionIndex.csv
+    <Out_Prefix>_Availability.txt
+    <Out_Prefix>_H0.txt

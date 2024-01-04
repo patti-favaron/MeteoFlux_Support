@@ -2,7 +2,7 @@
 
 ## In general
 
-This repository contains scripts and programs supporting MeteoFlux Core V2 users to check quality of data and, more generally, using MeteoFlux Core V2 to its best posibilities.
+This repository contains scripts and programs supporting MeteoFlux Core V2 users to check quality of data and, more generally, using MeteoFlux(R) Core V2 to its best posibilities.
 
 The procedures are described in alphabetic order in the next sections.
 
@@ -34,7 +34,7 @@ represents the year processing refers to: the procedure operates on a yearly bas
 
 ## 'procGen.py' script
 
-The **procGen.py** script aggregates hourly "processed" and "diagnostic" MeteoFlux Core V2 data to individual files, in preparation of diagnostic data analysis, one of the site maintenance activities.
+The **procGen.py** script aggregates hourly "processed" and "diagnostic" MeteoFlux(R) Core V2 data to individual files, in preparation of diagnostic data analysis, one of the site maintenance activities.
 
 To run the procedure the following command line is used:
 
@@ -61,7 +61,7 @@ The parameters <Processed_File> and <Diagnostic_File> indicate the names of the 
 
 ## 'checkSite.py' script
 
-The **checkSite.py** script gets aggregated MeteoFlux Core V2 sonic processed data, as produced using procedure **procGen.py**, and builds a set of files useful during maintenance.
+The **checkSite.py** script gets aggregated MeteoFlux(R) Core V2 sonic processed data, as produced using procedure **procGen.py**, and builds a set of files useful during maintenance.
 
 To run the procedure the following command line is used:
 
@@ -71,7 +71,7 @@ where
 
     <Processed_Data_File>
 
-is the pathname of the a file containing processed sonic data in MeteoFlux Core V2 aggregated format, and
+is the pathname of the a file containing processed sonic data in MeteoFlux(R) Core V2 aggregated format, and
 
     <Out_Prefix>
 
@@ -79,7 +79,9 @@ a string which, concatenated on left to other strings, allows building actual ou
 
 The file produced on successful exit are:
 
-    **<Out_Prefix>_BlindSpots.csv**
+    <Out_Prefix>_BlindSpots.csv
     <Out_Prefix>_ObstructionIndex.csv
     <Out_Prefix>_Availability.txt
     <Out_Prefix>_H0.txt
+
+The meaning and use of these files is given in MeteoFlux(R) Core V2 maintenance manual.

@@ -25,6 +25,7 @@
 import os
 import sys
 import datetime
+import pandas
 
 if __name__ == "__main__":
 
@@ -226,10 +227,8 @@ if __name__ == "__main__":
     # -1- Daily and monthly averages
     h0_dict = {}
     for i in range(len(time_stamp)):
-        current_time  = time_stamp[i]
-        current_month = current_time.month
-        current_day   = current_time.day
-        time_key      = (current_month, current_day)
+        current_time = time_stamp[i]
+        time_key     = current_time.month
         if h0s[i] >= -200.0 and h0s[i] <= 1600.0:
             try:
                 gather = h0_dict[time_key]
@@ -242,9 +241,9 @@ if __name__ == "__main__":
     h0_num_neg = [0 for i in range(12)]
     h0_num_pos = [0 for i in range(12)]
     for k in sorted(h0_dict.keys()):
-        h0_this_day = h0_dict[k]
-        month = k[0] - 1
-        for h0 in h0_this_day:
+        h0_this_month = h0_dict[k]
+        month = k - 1
+        for h0 in h0_this_month:
             if h0 >= 0.0:
                 h0_monthly_pos[month] += h0
                 h0_num_pos[month]     += 1
@@ -252,17 +251,13 @@ if __name__ == "__main__":
                 h0_monthly_neg[month] += h0
                 h0_num_neg[month]     += 1
     for month in range(12):
-        if h0_num_pos[month] > 0:
-            h0_monthly_pos[month] /= h0_num_pos[month]
-        else:
-            h0_monthly_pos[month] = -9999.9
-        if h0_num_neg[month] > 0:
-            h0_monthly_neg[month] /= h0_num_neg[month]
-        else:
-            h0_monthly_neg[month] = -9999.9
-        if h0_num_pos[month] > -9999.0 and h0_num_neg[month] > -9999.0:
+        if (h0_num_pos[month] + h0_num_neg[month]) > 0:
+            h0_monthly_pos[month] /= (h0_num_pos[month] + h0_num_neg[month])
+            h0_monthly_neg[month] /= (h0_num_pos[month] + h0_num_neg[month])
             h0_monthly_tot[month] = h0_monthly_pos[month] + h0_monthly_neg[month]
         else:
+            h0_monthly_pos[month] = -9999.9
+            h0_monthly_neg[month] = -9999.9
             h0_monthly_tot[month] = -9999.9
     # -1- Write report
     out_file = prefix + "_H0.txt"

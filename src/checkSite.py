@@ -205,8 +205,9 @@ if __name__ == "__main__":
         f.write("\n")
     f.close()
 
-    # A bit of physics, for good
+    # H0
     print("H0 statistics")
+
     # -1- Sensible heat flux simple statistics
     h0_lower_outliers = 0
     h0_upper_outliers = 0
@@ -273,4 +274,36 @@ if __name__ == "__main__":
     for i in range(12):
         f.write("%2d, %9.3f, %9.3f, %9.3f\n" % (i+1, h0_monthly_neg[i], h0_monthly_pos[i], h0_monthly_tot[i]))
     f.write("\n")
+    f.close()
+
+    # -1- Typical days
+    n_blks = 86400 // int(avg_time)
+    h0_t = [[0.0 for month in range(12)] for blk in range(n_blks)]
+    h0_n = [[0   for month in range(12)] for blk in range(n_blks)]
+    for idx in range(len(time_stamp)):
+        month = time_stamp[idx].month - 1
+        second = 3600*time_stamp[idx].hour + 60*time_stamp[idx].minute + time_stamp[idx].second
+        blk = second // int(avg_time)
+        h0_t[blk][month] += h0s[idx]
+        h0_n[blk][month] += 1
+    for month in range(12):
+        for blk in range(n_blks):
+            if h0_n[blk][month] > 0:
+                h0_t[blk][month] /= h0_n[blk][month]
+            else:
+                h0_t[blk][month] = None
+
+    # -1- Write data
+    out_file = prefix + "_H0_Typical.csv"
+    f = open(out_file, "w")
+    f.write("Second, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec\n")
+    for blk in range(n_blks):
+        sec = blk * avg_time
+        f.write("%5d" % sec)
+        for month in range(12):
+            if h0_t[blk][month] is not None:
+                f.write(", %9.3f" % h0_t[blk][month])
+            else:
+                f.write(", NA       ")
+        f.write("\n")
     f.close()
